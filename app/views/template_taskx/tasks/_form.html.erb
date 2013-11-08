@@ -1,0 +1,26 @@
+<%= simple_form_for(@task) do |f| %>    
+ 
+  <%= f.input :project_name, :label => t('Project Name'), :readonly => true, :input_html => {:value => @project.name}%>
+  <%= f.input :project_task_template_name, :label => t('Task Template'), :readonly => true, :input_html => {:value => @project.task_template.name} %>
+  <%= f.input :customer_name, :label => t('Customer Name'), :readonly => true, :input_html => {:value => @project.customer.name} %>
+  <%= f.input :start_date, :label => t('Start Date'), :as => :string %>
+  <%= f.input :finish_date, :label => t('Finish Date'), :as => :string %>
+  <%= f.input :template_item_id, :label => t('Task Name'), :collection => return_template_item(@project.task_template_id), :label_method => lambda {|r| "#{r.task_definition.name}" }, 
+              :value_method => :id, :include_blank => true %>
+  <%= f.input :brief_note, :label => t('Brief Note'), :input_html => {:rows => 2}, :readonly => readonly?(@task, 'brief_note') %> 
+  <% if readonly?(@task, 'expedite')%>
+    <%= f.input :expedite_noupdate, :label => t('Expedite'), :input_html => {:value => @task.expedite ? '是' : '否'} %>
+  <% else%>
+    <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
+  <% end %>
+  <%= f.input :cancelled, :label => t('Cancelled'), :as => :boolean unless readonly?(@task, 'cancelled') %>
+  <%= f.input :cancelled_noupdate, :label => t('Cancelled'), :input_html => {:value => @task.cancelled ? t('Yes') : t('No')}, :as => :boolean if readonly?(@task, 'cancelled') %>
+  <%= f.input :skipped, :label => t('Skipped'), :as => :boolean unless readonly?(@task, 'skipped') %>
+  <%= f.input :skipped_noupdate, :label => t('Skipped'), :input_html => {:value => @task.skipped ? t('Yes') : t('No')}, :as => :boolean if readonly?(@task, 'skipped') %>
+  <%= f.input :completed, :label => t('Completed'), :as => :boolean unless readonly?(@task, 'completed') %>
+  <%= f.input :completed_noupdate, :label => t('Completed'), :input_html => {:value => @task.completed ? t('Yes') : t('No')}, :as => :boolean if readonly?(@task, 'completed') %>
+  <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::CommonxHelper.return_misc_definitions('task_status'), :include_blank => true %>
+  
+  <%= link_to t('Back'), tasks_path, :class => BUTTONS_CLS['action'] %>
+  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
+<% end %> 

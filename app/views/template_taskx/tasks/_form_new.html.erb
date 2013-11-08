@@ -1,0 +1,17 @@
+<%= simple_form_for(@task) do |f| %>    
+ 
+  <%= f.input :project_name, :label => t('Project Name'), :readonly => true, :input_html => {:value => @project.name}%>
+  <%= f.input :project_task_template_name, :label => t('Task Template'), :readonly => true, :input_html => {:value => @project.task_template.name} %>
+  <%= f.input :customer_name, :label => t('Customer Name'), :readonly => true, :input_html => {:value => @project.customer.name} %>
+  <%= f.input :template_item_id, :label => t('Task Name'), :collection => return_template_item(@project.task_template_id), :label_method => lambda {|r| "#{r.task_definition.name}" }, 
+              :value_method => :id, :include_blank => true %>
+  <%= f.input :brief_note, :label => t('Brief Note'), :input_html => {:rows => 2} %> 
+  <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
+  <%= f.input :start_date, :label => t('Start Date'), :as => :string %>
+  <%= f.input :finish_date, :label => t('Finish Date'), :as => :string %>
+  <%= f.input :project_id, :as => :hidden %>
+  <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::CommonxHelper.return_misc_definitions('task_status'), :include_blank => true %>
+  
+  <%= link_to t('Back'), tasks_path, :class => BUTTONS_CLS['action'] %>
+  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
+<% end %> 

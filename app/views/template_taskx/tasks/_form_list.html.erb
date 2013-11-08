@@ -1,0 +1,42 @@
+<div id="main_body">
+	
+	<% if false %>
+<%= render inline: @erb_code %>
+<% end %>
+<% if true %>
+<h4><%=t(@title)%></h4>
+<table class="table table-striped">
+  <tr>
+    <th>#</th>
+    <th><%=t('TaskName') %></th>
+    <th><%=t('Project') %></th>
+    <th><%=t('TaskStatus') %></th> 
+    <th><%=t('StartDate') %></th>
+    <th><%=t('FinishDate') %></th>     
+    <th><%=t('Completed') %></th>
+    <th><%=t('LastUpdatedBy') %></th>
+    <th></th>
+    
+  </tr>
+
+<% models.each do |r| %>
+  <tr>
+  	
+  	<td><%= link_to r.id.to_s, SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape template_taskx.task_path(r, :project_id => r.project_id, :parent_record_id => r.project_id, :parent_resource => TemplateTaskx.project_resource.to_s)}" %></td>
+  	<td><%= prt(r, 'template_item.task_definition.name' ) %></td>
+  	<td><%= prt(r, 'project.name') %></td>
+  	<td><%= prt(r, 'task_status.name') %></td>
+  	<td><%= r.start_date.strftime("%Y/%m/%d") %></td>
+  	<td><%= r.finish_date.strftime("%Y/%m/%d") %></td>  	           
+    <td><%= prt(r, :completed) %></td>
+    <td><%= prt(r, 'last_updated_by.name') %></td>  
+    <td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape(template_taskx.edit_task_path(r, :project_id => r.project.id, :parent_record_id => r.project_id, :parent_resource => TemplateTaskx.project_resource.to_s))}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %> </td>
+
+  </tr>
+<% end %>
+
+</table>
+  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>&nbsp;
+  <%= link_to t('New Task'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape(new_task_path(:project_id => @project.id, :parent_record_id => @project.id, :parent_resource => TemplateTaskx.project_resource.to_s))}", :class => BUTTONS_CLS['action'] if @project && has_action_right?('create', params[:controller], @project) %>
+<% end %>
+</div>

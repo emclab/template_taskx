@@ -1,0 +1,73 @@
+<div id='main_body'>
+	<% if false %>
+<%= render inline: ERB.new(@erb_code).result(binding) %>
+<% end %>
+<% if true %>
+<h4><%=t('Task Info')%> </h4>
+
+<p>
+  <b><%=t('Task Name')%></b>
+  <%= @task.template_item.task_definition.name %>
+</p>
+<p>
+  <b><%=t('Project Name')%></b>
+  <%= @project.name %>
+</p>  
+<p>
+  <b><%=t('Start Date')%></b>
+  <%= @task.start_date.strftime("%Y/%m/%d") %>
+</p> 
+<p>
+  <b><%=t('Finish Date')%></b>
+  <%= @task.finish_date.strftime("%Y/%m/%d") %>
+</p> 
+<p>
+  <b><%=t('Task Status')%></b>
+  <%= @task.task_status.try(:name) if @task.task_status_id.present? %>
+</p> 
+<p>
+  <b><%=t('Expedite')%></b>
+  <%= @task.expedite ? '是' : '否' %>
+</p> 
+<p>
+  <b><%=t('Completed')%></b>
+  <%= @task.completed ? '是' : '否' %>
+</p> 
+<p>
+  <b><%=t('Skipped')%></b>
+  <%= @task.skipped ? '是' : '否' %>
+</p> 
+<p>
+  <b><%=t('Cancelled')%></b>
+  <%= @task.cancelled ? '是' : '否' %>
+</p> 
+<p>
+  <b><%=t('Last Updated By')%></b>
+  <%= @task.last_updated_by.name %>
+</p>
+<p>
+  <b>LOG</b>
+  <% Commonx::Log.where('resource_id = ? AND resource_name = ?', @task.id, params[:controller].sub('/', '_')).order("created_at DESC").each do |t| %>
+    <li><%= t.created_at.strftime("%Y/%m/%d") %>,&nbsp; <%= t.last_updated_by.name %>,&nbsp; <%= t.log %> </li>
+  <% end %>
+</p>
+
+<table class="table table-striped">
+  <tr>
+    <th>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%#= link_to t('New Request'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape(new_task_tarequest_path(@task, :parent_record_id => @task, :parent_resource => 'projectx/tasks'))}", :id => 'new_request_link', 
+    	              :class => BUTTONS_CLS['action'] if @task.task_template.need_request && has_action_right?('create', 'projectx/task_requests') %>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%#= link_to t('Task Requests'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape(projectx.task_task_requests_path(@task, :parent_record_id => @task, :parent_resource => 'projectx/tasks'))}", :id => 'task_request_link', 
+    	              :class => BUTTONS_CLS['action'] if @task.task_template.need_request && has_action_right?('index', 'projectx/task_requests') %>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @task.id, :resource_name => params[:controller], :subaction => 'task', :format => :js), :remote => true, 
+                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_task', 'commonx/logs') %>    	
+    </th>
+  </tr>
+</table>
+
+<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+<% end %>
+</div>
