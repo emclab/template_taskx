@@ -3,7 +3,7 @@ require_dependency "template_taskx/application_controller"
 module TemplateTaskx
   class TasksController < ApplicationController
     before_filter :require_employee
-    before_filter :load_value
+    before_filter :load_parent_record
     
     def index
       @title = 'Tasks'      
@@ -53,9 +53,11 @@ module TemplateTaskx
     end
     
     protected
-    def load_value
+    def load_parent_record
       @project = TemplateTaskx.project_class.find_by_id(params[:project_id]) if params[:project_id].present? && params[:project_id].to_i > 0
       @template_item = TemplateTaskx.template_item_class.find_by_id(params[:template_item_id]) if params[:template_item_id].present? && params[:template_item_id].to_i > 0
+      @project = TemplateTaskx.project_class.find_by_id(TemplateTaskx::Task.find_by_id(params[:id]).project_id) if params[:id].present?
+      @template_item = TemplateTaskx.project_class.find_by_id(TemplateTaskx::Task.find_by_id(params[:id]).template_item_id) if params[:id].present?
     end
   end
 end
