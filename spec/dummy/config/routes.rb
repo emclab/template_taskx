@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   mount SimpleTypex::Engine => '/project_typex'
   mount SimpleContractx::Engine => '/contractx'
   mount FixedTaskProjectx::Engine => '/projectx'
+  mount Searchx::Engine => '/searchx'
   
   resource :session
   

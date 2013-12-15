@@ -12,6 +12,7 @@ module TemplateTaskx
       @tasks = @tasks.where(:template_item_id => params[:template_item_id]) if @template_item
       @tasks = @tasks.page(params[:page]).per_page(@max_pagination)
       @erb_code = find_config_const('task_index_view', 'template_taskx')
+      
     end
   
     def new
