@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    template_taskx (3.2.12.01)
+    template_taskx (3.2.12.03)
       coffee-rails (~> 3.2.1)
       database_cleaner
       execjs
