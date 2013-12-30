@@ -1,3 +1,3 @@
 module TemplateTaskx
-  VERSION = "0.0.2"
+  VERSION = "3.2.12.02"
 end
