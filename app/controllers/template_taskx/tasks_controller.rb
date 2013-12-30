@@ -59,6 +59,7 @@ module TemplateTaskx
       @template_item = TemplateTaskx.template_item_class.find_by_id(params[:template_item_id]) if params[:template_item_id].present? && params[:template_item_id].to_i > 0
       @project = TemplateTaskx.project_class.find_by_id(TemplateTaskx::Task.find_by_id(params[:id]).project_id) if params[:id].present?
       @template_item = TemplateTaskx.project_class.find_by_id(TemplateTaskx::Task.find_by_id(params[:id]).template_item_id) if params[:id].present?
+      @project = TemplateTaskx.project_class.find_by_id(params[:task][:project_id]) if params[:task].present? && params[:task][:project_id].to_i > 0
     end
   end
 end
