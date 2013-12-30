@@ -13,7 +13,7 @@
   <%= f.input :expedite, :label => t('Expedite'), :as => :boolean %>
   <%= f.input :start_date, :label => t('Start Date'), :as => :string %>
   <%= f.input :finish_date, :label => t('Finish Date'), :as => :string %>
-  <%= f.input :project_id, :as => :hidden %>
+  <%= f.input :project_id, :as => :hidden, :input_html => {:value => @project.id} %>
   <%= f.input :task_status_id, :label => t('Task Status'), :collection => Commonx::CommonxHelper.return_misc_definitions('task_status'), :include_blank => true %>
   
   <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
