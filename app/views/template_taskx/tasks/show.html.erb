@@ -57,6 +57,8 @@
   <tr>
     <th>
     	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     	<%#= link_to t('New Request'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI::escape(new_task_tarequest_path(@task, :parent_record_id => @task, :parent_resource => 'projectx/tasks'))}", :id => 'new_request_link', 
     	              :class => BUTTONS_CLS['action'] if @task.task_template.need_request && has_action_right?('create', 'projectx/task_requests') %>
     	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -69,7 +71,6 @@
   </tr>
 </table>
 
-<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
 </div>
 
 <% end %>
